@@ -71,7 +71,7 @@ const FaceDetection = () => {
       await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
       await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
       setIsModelLoaded(true);
-      console.log("Models loaded successfully");
+      // console.log("Models loaded successfully");
     } catch (err) {
       console.error("Error loading models:", err);
       setError("Failed to load face detection models.");
@@ -89,7 +89,7 @@ const FaceDetection = () => {
       const timestamp = new Date().getTime();
       const response = await fetch(`/api/faces?t=${timestamp}`);
       const data = await response.json();
-      console.log("Fetched faces:", data.faces);
+      // console.log("Fetched faces:", data.faces);
 
       if (data.error) throw new Error(data.error);
 
@@ -108,7 +108,7 @@ const FaceDetection = () => {
       );
 
       setLabeledDescriptors(labeledDescriptors);
-      console.log("Face descriptors updated");
+      // console.log("Face descriptors updated");
       setDetectedFaces({});
 
       const timer = setTimeout(() => setProgress(100), 500);
@@ -292,7 +292,7 @@ const FaceDetection = () => {
               const personKey = `${label}_${currentDate}`;
 
               if (!detectedFaces[personKey]) {
-                console.log(`New face detected: ${label} with confidence ${confidencePercent}%`);
+                // console.log(`New face detected: ${label} with confidence ${confidencePercent}%`);
 
                 setAttendance(prev => [...prev, {
                   name: label,
@@ -306,7 +306,7 @@ const FaceDetection = () => {
                   [personKey]: { time: currentTime, confidence: confidencePercent }
                 }));
 
-                console.log(`Attendance automatically recorded for ${label} at ${timestamp} - Status: ${status}`);
+                // console.log(`Attendance automatically recorded for ${label} at ${timestamp} - Status: ${status}`);
               }
             }
           });
@@ -331,7 +331,7 @@ const FaceDetection = () => {
       labeledDescriptors &&
       labeledDescriptors.length > 0
     ) {
-      console.log("Starting automatic face detection");
+      // console.log("Starting automatic face detection");
 
       detectionIntervalRef.current = setInterval(() => {
         detectFaces();
@@ -376,7 +376,7 @@ const FaceDetection = () => {
           console.error("Upload error:", error);
           setError("Failed to upload image.");
         } else {
-          console.log("Uploaded image:", data);
+          // console.log("Uploaded image:", data);
           alert(`Image uploaded successfully for ${name}`);
 
           const status = getAttendanceStatus();
@@ -459,7 +459,7 @@ const FaceDetection = () => {
     const resetDetectedFacesAtMidnight = () => {
       const now = new Date();
       if (now.getHours() === 0 && now.getMinutes() === 0) {
-        console.log("Midnight reset - clearing detected faces");
+        // console.log("Midnight reset - clearing detected faces");
         setDetectedFaces({});
       }
     };
